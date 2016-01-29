@@ -112,9 +112,7 @@ class RenderTableNode(Node):
     def render(self, context):
         table = self.table.resolve(context)
 
-        if isinstance(table, tables.Table):
-            pass
-        elif hasattr(table, "model"):
+        if hasattr(table, "model"):
             queryset = table
 
             # We've been given a queryset, create a table using its model and
@@ -127,9 +125,6 @@ class RenderTableNode(Node):
             request = context.get('request')
             if request:
                 RequestConfig(request).configure(table)
-        else:
-            raise ValueError("Expected table or queryset, not '%s'." %
-                             type(table).__name__)
 
         if self.template:
             template = self.template.resolve(context)
