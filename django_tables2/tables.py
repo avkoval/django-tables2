@@ -135,7 +135,10 @@ class TableData(object):
         """
         if hasattr(self, "queryset"):
             return self.queryset.model._meta.verbose_name
-        return getattr(self.list, "verbose_name", "item")
+        if hasattr(self, 'list'):
+            return getattr(self.list, "verbose_name", "item")
+        else:
+            return None
 
     @cached_property
     def verbose_name_plural(self):
